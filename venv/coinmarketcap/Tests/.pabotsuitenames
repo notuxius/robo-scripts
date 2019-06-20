@@ -1,0 +1,5 @@
+datasources:962ce861d2569a39b0b295fb3c803223f584d8f1
+commandlineoptions:97d170e1550eee4afc0af065b78cda302a97674c
+suitesfrom:no-suites-from-option
+file:eab12fa099661ad17ff4fe47136baf347da46300
+--suite Tests.Coinmarketcap

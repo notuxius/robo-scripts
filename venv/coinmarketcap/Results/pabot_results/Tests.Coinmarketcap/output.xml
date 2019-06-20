@@ -1,0 +1,1789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.3 on win32)" generated="20190619 20:24:01.660" rpa="false">
+<suite id="s1" name="Tests" source="C:\Users\notuxius\PycharmProjects\robo-scripts\venv\coinmarketcap\Tests">
+<suite id="s1-s1" name="Coinmarketcap" source="C:\Users\notuxius\PycharmProjects\robo-scripts\venv\coinmarketcap\Tests\coinmarketcap.robot">
+<test id="s1-s1-t1" name="Show Currencies Lists">
+<kw name="${running_time} IN RANGE [ 8 ]" type="for">
+<kw name="${running_time} = 0" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.087" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:02.086" endtime="20190619 20:24:02.087"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.087" endtime="20190619 20:24:02.089"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.089" endtime="20190619 20:24:02.091"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.093" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:02.092" endtime="20190619 20:24:02.094"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.482" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:02.483" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:02.483" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:02.094" endtime="20190619 20:24:02.483"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.485" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:02.484" endtime="20190619 20:24:02.486"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.487" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:02.487" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:02.486" endtime="20190619 20:24:02.488"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.488" endtime="20190619 20:24:02.489"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.491" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:02.862Z', 'error_code': 0, 'error_message': None, 'elapsed': 5, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:02.489" endtime="20190619 20:24:02.492"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.494" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:02.492" endtime="20190619 20:24:02.494"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.492" endtime="20190619 20:24:02.494"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.496" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:02.495" endtime="20190619 20:24:02.497"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.494" endtime="20190619 20:24:02.497"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.499" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:02.497" endtime="20190619 20:24:02.499"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.497" endtime="20190619 20:24:02.499"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.502" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:02.500" endtime="20190619 20:24:02.502"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.500" endtime="20190619 20:24:02.502"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.504" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:02.502" endtime="20190619 20:24:02.504"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.502" endtime="20190619 20:24:02.504"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.506" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:02.505" endtime="20190619 20:24:02.507"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.505" endtime="20190619 20:24:02.507"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.508" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:02.507" endtime="20190619 20:24:02.509"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.507" endtime="20190619 20:24:02.509"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.511" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:02.509" endtime="20190619 20:24:02.511"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.509" endtime="20190619 20:24:02.511"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.512" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:02.511" endtime="20190619 20:24:02.513"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.511" endtime="20190619 20:24:02.513"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.515" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:02.513" endtime="20190619 20:24:02.515"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.513" endtime="20190619 20:24:02.515"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.492" endtime="20190619 20:24:02.515"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:02.086" endtime="20190619 20:24:02.516"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.085" endtime="20190619 20:24:02.516"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.085" endtime="20190619 20:24:02.516"></status>
+</kw>
+<kw name="${running_time} = 1" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.520" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:02.519" endtime="20190619 20:24:02.520"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.521" endtime="20190619 20:24:02.523"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.523" endtime="20190619 20:24:02.526"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.528" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:02.526" endtime="20190619 20:24:02.529"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.850" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:02.850" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:02.850" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:02.529" endtime="20190619 20:24:02.850"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.852" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:02.851" endtime="20190619 20:24:02.853"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.855" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:02.855" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:02.853" endtime="20190619 20:24:02.856"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.856" endtime="20190619 20:24:02.858"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.861" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:03.222Z', 'error_code': 0, 'error_message': None, 'elapsed': 5, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:02.858" endtime="20190619 20:24:02.861"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.865" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:02.863" endtime="20190619 20:24:02.865"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.862" endtime="20190619 20:24:02.865"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.868" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:02.866" endtime="20190619 20:24:02.868"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.866" endtime="20190619 20:24:02.868"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.871" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:02.869" endtime="20190619 20:24:02.871"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.869" endtime="20190619 20:24:02.871"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.873" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:02.872" endtime="20190619 20:24:02.874"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.872" endtime="20190619 20:24:02.874"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.876" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:02.874" endtime="20190619 20:24:02.877"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.874" endtime="20190619 20:24:02.877"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.879" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:02.877" endtime="20190619 20:24:02.879"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.877" endtime="20190619 20:24:02.880"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.882" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:02.880" endtime="20190619 20:24:02.883"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.880" endtime="20190619 20:24:02.883"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.886" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:02.883" endtime="20190619 20:24:02.886"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.883" endtime="20190619 20:24:02.886"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.889" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:02.887" endtime="20190619 20:24:02.889"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.886" endtime="20190619 20:24:02.889"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.891" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:02.890" endtime="20190619 20:24:02.892"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.889" endtime="20190619 20:24:02.892"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.861" endtime="20190619 20:24:02.892"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:02.517" endtime="20190619 20:24:02.892"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.517" endtime="20190619 20:24:02.893"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.516" endtime="20190619 20:24:02.893"></status>
+</kw>
+<kw name="${running_time} = 2" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:02.897" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:02.895" endtime="20190619 20:24:02.897"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.897" endtime="20190619 20:24:02.899"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:02.899" endtime="20190619 20:24:02.901"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:02.903" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:02.901" endtime="20190619 20:24:02.904"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.129" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:03.130" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:03.130" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:02.904" endtime="20190619 20:24:03.130"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.131" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:03.130" endtime="20190619 20:24:03.132"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.133" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:03.133" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:03.132" endtime="20190619 20:24:03.133"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.134" endtime="20190619 20:24:03.135"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.138" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:03.510Z', 'error_code': 0, 'error_message': None, 'elapsed': 4, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:03.136" endtime="20190619 20:24:03.138"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.140" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.138" endtime="20190619 20:24:03.140"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.138" endtime="20190619 20:24:03.140"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.142" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:03.140" endtime="20190619 20:24:03.142"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.140" endtime="20190619 20:24:03.142"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.144" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:03.143" endtime="20190619 20:24:03.144"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.142" endtime="20190619 20:24:03.144"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.146" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.145" endtime="20190619 20:24:03.146"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.144" endtime="20190619 20:24:03.147"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.151" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:03.147" endtime="20190619 20:24:03.151"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.147" endtime="20190619 20:24:03.151"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.153" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:03.152" endtime="20190619 20:24:03.153"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.151" endtime="20190619 20:24:03.153"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.155" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:03.154" endtime="20190619 20:24:03.156"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.154" endtime="20190619 20:24:03.156"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.158" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:03.156" endtime="20190619 20:24:03.159"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.156" endtime="20190619 20:24:03.159"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.161" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:03.159" endtime="20190619 20:24:03.161"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.159" endtime="20190619 20:24:03.161"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.163" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:03.162" endtime="20190619 20:24:03.163"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.161" endtime="20190619 20:24:03.163"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.138" endtime="20190619 20:24:03.163"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:02.894" endtime="20190619 20:24:03.164"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.894" endtime="20190619 20:24:03.164"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.893" endtime="20190619 20:24:03.164"></status>
+</kw>
+<kw name="${running_time} = 3" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.166" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:03.166" endtime="20190619 20:24:03.166"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.166" endtime="20190619 20:24:03.167"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.168" endtime="20190619 20:24:03.169"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.170" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:03.169" endtime="20190619 20:24:03.171"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.553" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:03.553" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:03.553" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:03.171" endtime="20190619 20:24:03.553"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.555" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:03.554" endtime="20190619 20:24:03.555"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.557" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:03.558" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:03.556" endtime="20190619 20:24:03.558"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.558" endtime="20190619 20:24:03.561"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.564" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:03.933Z', 'error_code': 0, 'error_message': None, 'elapsed': 7, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:03.561" endtime="20190619 20:24:03.564"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.567" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.565" endtime="20190619 20:24:03.567"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.565" endtime="20190619 20:24:03.567"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.569" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:03.567" endtime="20190619 20:24:03.569"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.567" endtime="20190619 20:24:03.569"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.571" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:03.570" endtime="20190619 20:24:03.571"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.569" endtime="20190619 20:24:03.572"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.574" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.572" endtime="20190619 20:24:03.574"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.572" endtime="20190619 20:24:03.574"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.576" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:03.574" endtime="20190619 20:24:03.576"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.574" endtime="20190619 20:24:03.576"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.579" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:03.577" endtime="20190619 20:24:03.579"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.577" endtime="20190619 20:24:03.579"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.581" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:03.579" endtime="20190619 20:24:03.581"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.579" endtime="20190619 20:24:03.581"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.583" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:03.582" endtime="20190619 20:24:03.584"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.582" endtime="20190619 20:24:03.584"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.586" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:03.584" endtime="20190619 20:24:03.586"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.584" endtime="20190619 20:24:03.586"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.588" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:03.586" endtime="20190619 20:24:03.588"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.586" endtime="20190619 20:24:03.588"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.564" endtime="20190619 20:24:03.588"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:03.165" endtime="20190619 20:24:03.588"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.164" endtime="20190619 20:24:03.588"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.164" endtime="20190619 20:24:03.589"></status>
+</kw>
+<kw name="${running_time} = 4" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.591" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:03.591" endtime="20190619 20:24:03.592"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.592" endtime="20190619 20:24:03.593"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.593" endtime="20190619 20:24:03.595"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.597" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:03.595" endtime="20190619 20:24:03.598"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.954" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:03.955" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:03.955" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:03.599" endtime="20190619 20:24:03.955"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.957" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:03.956" endtime="20190619 20:24:03.957"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.959" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:03.959" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:03.958" endtime="20190619 20:24:03.959"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.960" endtime="20190619 20:24:03.961"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.965" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:04.332Z', 'error_code': 0, 'error_message': None, 'elapsed': 7, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:03.962" endtime="20190619 20:24:03.965"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.968" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.966" endtime="20190619 20:24:03.968"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.966" endtime="20190619 20:24:03.968"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.971" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:03.969" endtime="20190619 20:24:03.971"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.969" endtime="20190619 20:24:03.971"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.973" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:03.972" endtime="20190619 20:24:03.973"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.971" endtime="20190619 20:24:03.974"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.976" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:03.974" endtime="20190619 20:24:03.976"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.974" endtime="20190619 20:24:03.976"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.979" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:03.977" endtime="20190619 20:24:03.979"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.977" endtime="20190619 20:24:03.979"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.981" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:03.980" endtime="20190619 20:24:03.982"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.980" endtime="20190619 20:24:03.982"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.984" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:03.982" endtime="20190619 20:24:03.985"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.982" endtime="20190619 20:24:03.985"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.986" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:03.985" endtime="20190619 20:24:03.987"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.985" endtime="20190619 20:24:03.987"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.989" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:03.987" endtime="20190619 20:24:03.989"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.987" endtime="20190619 20:24:03.989"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:03.991" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:03.989" endtime="20190619 20:24:03.991"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.989" endtime="20190619 20:24:03.991"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.965" endtime="20190619 20:24:03.991"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:03.590" endtime="20190619 20:24:03.991"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.589" endtime="20190619 20:24:03.992"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.589" endtime="20190619 20:24:03.992"></status>
+</kw>
+<kw name="${running_time} = 5" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:03.994" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:03.993" endtime="20190619 20:24:03.994"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.994" endtime="20190619 20:24:03.996"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:03.996" endtime="20190619 20:24:03.998"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.000" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:03.998" endtime="20190619 20:24:04.001"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.340" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:04.340" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:04.341" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.001" endtime="20190619 20:24:04.341"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.343" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.341" endtime="20190619 20:24:04.343"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.346" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:04.346" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:04.344" endtime="20190619 20:24:04.346"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.346" endtime="20190619 20:24:04.348"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.350" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:04.705Z', 'error_code': 0, 'error_message': None, 'elapsed': 5, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:04.348" endtime="20190619 20:24:04.351"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.353" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.352" endtime="20190619 20:24:04.354"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.351" endtime="20190619 20:24:04.354"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.356" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:04.354" endtime="20190619 20:24:04.357"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.354" endtime="20190619 20:24:04.357"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.359" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:04.357" endtime="20190619 20:24:04.359"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.357" endtime="20190619 20:24:04.359"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.361" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.360" endtime="20190619 20:24:04.362"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.359" endtime="20190619 20:24:04.362"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.364" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:04.363" endtime="20190619 20:24:04.365"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.362" endtime="20190619 20:24:04.365"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.367" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:04.365" endtime="20190619 20:24:04.367"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.365" endtime="20190619 20:24:04.368"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.369" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:04.368" endtime="20190619 20:24:04.370"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.368" endtime="20190619 20:24:04.370"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.372" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:04.370" endtime="20190619 20:24:04.372"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.370" endtime="20190619 20:24:04.373"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.375" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:04.373" endtime="20190619 20:24:04.375"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.373" endtime="20190619 20:24:04.375"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.378" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:04.376" endtime="20190619 20:24:04.378"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.375" endtime="20190619 20:24:04.378"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.351" endtime="20190619 20:24:04.378"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:03.993" endtime="20190619 20:24:04.378"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.992" endtime="20190619 20:24:04.379"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:03.992" endtime="20190619 20:24:04.379"></status>
+</kw>
+<kw name="${running_time} = 6" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.381" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:04.381" endtime="20190619 20:24:04.382"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.382" endtime="20190619 20:24:04.383"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.383" endtime="20190619 20:24:04.385"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.387" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:04.385" endtime="20190619 20:24:04.388"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.625" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:04.626" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:04.626" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.389" endtime="20190619 20:24:04.626"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.629" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.627" endtime="20190619 20:24:04.629"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.631" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:04.632" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:04.630" endtime="20190619 20:24:04.632"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.632" endtime="20190619 20:24:04.634"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.637" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:04.999Z', 'error_code': 0, 'error_message': None, 'elapsed': 7, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:04.634" endtime="20190619 20:24:04.637"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.639" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.638" endtime="20190619 20:24:04.640"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.638" endtime="20190619 20:24:04.640"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.642" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:04.640" endtime="20190619 20:24:04.643"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.640" endtime="20190619 20:24:04.643"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.645" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:04.643" endtime="20190619 20:24:04.646"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.643" endtime="20190619 20:24:04.646"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.648" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.647" endtime="20190619 20:24:04.649"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.646" endtime="20190619 20:24:04.649"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.651" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:04.649" endtime="20190619 20:24:04.651"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.649" endtime="20190619 20:24:04.651"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.654" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:04.652" endtime="20190619 20:24:04.654"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.652" endtime="20190619 20:24:04.654"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.657" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:04.655" endtime="20190619 20:24:04.657"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.655" endtime="20190619 20:24:04.658"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.661" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:04.659" endtime="20190619 20:24:04.662"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.658" endtime="20190619 20:24:04.662"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.667" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:04.662" endtime="20190619 20:24:04.667"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.662" endtime="20190619 20:24:04.667"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.670" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:04.668" endtime="20190619 20:24:04.670"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.668" endtime="20190619 20:24:04.671"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.637" endtime="20190619 20:24:04.671"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:04.380" endtime="20190619 20:24:04.671"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.379" endtime="20190619 20:24:04.671"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.379" endtime="20190619 20:24:04.671"></status>
+</kw>
+<kw name="${running_time} = 7" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>List Top 10 Currencies In Past 24 Hours By Volume</arg>
+</arguments>
+<kw name="List Top 10 Currencies In Past 24 Hours By Volume">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.675" level="INFO">${headers} = {}</msg>
+<status status="PASS" starttime="20190619 20:24:04.674" endtime="20190619 20:24:04.675"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>X-CMC_PRO_API_KEY</arg>
+<arg>942855f9-6ddf-4e60-a659-e6d072eddf5d</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.675" endtime="20190619 20:24:04.677"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${headers}</arg>
+<arg>Content-Type</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.677" endtime="20190619 20:24:04.680"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>https://pro-api.coinmarketcap.com</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.682" level="INFO">Creating Session using : alias=coinmarketcap_session, url=https://pro-api.coinmarketcap.com, headers={'X-CMC_PRO_API_KEY': '942855f9-6ddf-4e60-a659-e6d072eddf5d', 'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190619 20:24:04.680" endtime="20190619 20:24:04.683"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>coinmarketcap_session</arg>
+<arg>v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.917" level="INFO">Get Request using : alias=coinmarketcap_session, uri=v1/cryptocurrency/listings/latest?start=1&amp;limit=10&amp;sort=volume_24h&amp;convert=USD, headers=None json=None</msg>
+<msg timestamp="20190619 20:24:04.918" level="INFO">c:\users\notuxius\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:851: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)</msg>
+<msg timestamp="20190619 20:24:04.918" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.683" endtime="20190619 20:24:04.918"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.920" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190619 20:24:04.918" endtime="20190619 20:24:04.920"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.922" level="INFO">Length is 9982</msg>
+<msg timestamp="20190619 20:24:04.923" level="INFO">${length} = 9982</msg>
+<status status="PASS" starttime="20190619 20:24:04.921" endtime="20190619 20:24:04.923"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${length} &lt; 10000</arg>
+</arguments>
+<status status="PASS" starttime="20190619 20:24:04.923" endtime="20190619 20:24:04.925"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+</arguments>
+<assign>
+<var>${json}</var>
+</assign>
+<msg timestamp="20190619 20:24:04.928" level="INFO">${json} = {'status': {'timestamp': '2019-06-19T17:24:05.298Z', 'error_code': 0, 'error_message': None, 'elapsed': 6, 'credit_count': 1}, 'data': [{'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin',...</msg>
+<status status="PASS" starttime="20190619 20:24:04.925" endtime="20190619 20:24:04.928"></status>
+</kw>
+<kw name="${number_of_currency} IN RANGE [ 10 ]" type="for">
+<kw name="${number_of_currency} = 0" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.931" level="INFO">Bitcoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.929" endtime="20190619 20:24:04.931"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.928" endtime="20190619 20:24:04.931"></status>
+</kw>
+<kw name="${number_of_currency} = 1" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.934" level="INFO">Tether</msg>
+<status status="PASS" starttime="20190619 20:24:04.932" endtime="20190619 20:24:04.934"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.931" endtime="20190619 20:24:04.934"></status>
+</kw>
+<kw name="${number_of_currency} = 2" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.937" level="INFO">Ethereum</msg>
+<status status="PASS" starttime="20190619 20:24:04.935" endtime="20190619 20:24:04.938"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.935" endtime="20190619 20:24:04.938"></status>
+</kw>
+<kw name="${number_of_currency} = 3" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.940" level="INFO">Litecoin</msg>
+<status status="PASS" starttime="20190619 20:24:04.938" endtime="20190619 20:24:04.940"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.938" endtime="20190619 20:24:04.940"></status>
+</kw>
+<kw name="${number_of_currency} = 4" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.942" level="INFO">EOS</msg>
+<status status="PASS" starttime="20190619 20:24:04.941" endtime="20190619 20:24:04.943"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.940" endtime="20190619 20:24:04.943"></status>
+</kw>
+<kw name="${number_of_currency} = 5" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.945" level="INFO">Bitcoin Cash</msg>
+<status status="PASS" starttime="20190619 20:24:04.944" endtime="20190619 20:24:04.946"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.943" endtime="20190619 20:24:04.946"></status>
+</kw>
+<kw name="${number_of_currency} = 6" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.948" level="INFO">XRP</msg>
+<status status="PASS" starttime="20190619 20:24:04.946" endtime="20190619 20:24:04.948"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.946" endtime="20190619 20:24:04.948"></status>
+</kw>
+<kw name="${number_of_currency} = 7" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.951" level="INFO">Ethereum Classic</msg>
+<status status="PASS" starttime="20190619 20:24:04.949" endtime="20190619 20:24:04.951"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.949" endtime="20190619 20:24:04.951"></status>
+</kw>
+<kw name="${number_of_currency} = 8" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.954" level="INFO">TRON</msg>
+<status status="PASS" starttime="20190619 20:24:04.952" endtime="20190619 20:24:04.954"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.952" endtime="20190619 20:24:04.954"></status>
+</kw>
+<kw name="${number_of_currency} = 9" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${json['data'][${number_of_currency}]['name']}</arg>
+</arguments>
+<msg timestamp="20190619 20:24:04.957" level="INFO">Binance Coin</msg>
+<status status="PASS" starttime="20190619 20:24:04.955" endtime="20190619 20:24:04.957"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.954" endtime="20190619 20:24:04.957"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.928" endtime="20190619 20:24:04.957"></status>
+</kw>
+<timeout value="500 milliseconds"></timeout>
+<status status="PASS" starttime="20190619 20:24:04.673" endtime="20190619 20:24:04.957"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.672" endtime="20190619 20:24:04.957"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:04.672" endtime="20190619 20:24:04.957"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.084" endtime="20190619 20:24:04.958"></status>
+</kw>
+<status status="PASS" starttime="20190619 20:24:02.084" endtime="20190619 20:24:04.958" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20190619 20:24:01.737" endtime="20190619 20:24:04.959"></status>
+</suite>
+<status status="PASS" starttime="20190619 20:24:01.664" endtime="20190619 20:24:04.971"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="Tests">Tests</stat>
+<stat pass="1" fail="0" id="s1-s1" name="Coinmarketcap">Tests.Coinmarketcap</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

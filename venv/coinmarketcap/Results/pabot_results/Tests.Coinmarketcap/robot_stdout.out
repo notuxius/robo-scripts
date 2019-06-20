@@ -1,0 +1,16 @@
+==============================================================================
+Tests                                                                         
+==============================================================================
+Tests.Coinmarketcap                                                           
+==============================================================================
+Show Currencies Lists                                                 | PASS |
+------------------------------------------------------------------------------
+Tests.Coinmarketcap                                                   | PASS |
+1 critical test, 1 passed, 0 failed
+1 test total, 1 passed, 0 failed
+==============================================================================
+Tests                                                                 | PASS |
+1 critical test, 1 passed, 0 failed
+1 test total, 1 passed, 0 failed
+==============================================================================
+Output:  C:\Users\notuxius\PycharmProjects\robo-scripts\venv\coinmarketcap\Results\pabot_results\Tests.Coinmarketcap\output.xml
